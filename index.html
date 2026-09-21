@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="🥹💴🥹">
+<title>🥹💴🥹</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root {
+  --bg-core: #000000;
+  --bg-surface: #0a0a0a;
+  --bg-card: #121212;
+  --bg-card-hover: #1e1e1e;
+  --border-subtle: #262626;
+  --text-main: #f1f5f9;
+  --text-muted: #94a3b8;
+  --accent: #38bdf8;
+  --accent-glow: rgba(56, 189, 248, 0.25);
+  --accent-hover: #0ea5e9;
+  --danger: #fb7185;
+  --success: #34d399;
+  --warning: #fbbf24;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+body { background-color: var(--bg-core) !important; color: var(--text-main) !important; min-height: 100vh; padding-bottom: 90px; }
+
+header {
+  background-color: var(--bg-surface) !important;
+  border-bottom: 1px solid var(--border-subtle);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.8);
+}
+.header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+@media(min-width: 640px) {
+  .header-container { flex-direction: row; justify-content: space-between; align-items: center; }
+}
+.brand-box { display: flex; align-items: center; gap: 12px; }
+.brand-title { font-size: 18px; font-weight: 700; color: var(--text-main); letter-spacing: 0.5px; }
+.brand-subtitle { font-size: 11px; color: var(--accent); margin-top: 2px; font-family: monospace; }
+
+.tabs-box { display: flex; gap: 6px; width: 100%; }
+@media(min-width: 640px) { .tabs-box { width: auto; } }
+.tab-btn {
+  flex: 1;
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  border: 1px solid var(--border-subtle);
+  background-color: var(--bg-card);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.tab-btn:hover { background-color: var(--bg-card-hover); color: var(--text-main); }
+.tab-btn.active { background-color: var(--accent); color: #000000; font-weight: 700; border-color: var(--accent); box-shadow: 0 0 15px var(--accent-glow); }
+
+main { max-width: 1200px; margin: 0 auto; padding: 16px; }
+.hidden { display: none !important; }
+
+.card {
+  background-color: var(--bg-card) !important;
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 16px;
+  color: var(--text-main);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+}
+.card-title { font-size: 15px; font-weight: 700; color: var(--text-main); letter-spacing: 0.3px; margin-bottom: 6px; }
+.card-desc { font-size: 12px; color: var(--text-muted); margin-bottom: 16px; line-height: 1.4; }
+
+.form-grid { display: grid; grid-template-columns: 1fr; gap: 14px; margin-bottom: 16px; }
+@media(min-width: 640px) { .form-grid { grid-template-columns: repeat(2, 1fr); } }
+.form-group { display: flex; flex-direction: column; gap: 6px; }
+.form-group.full { grid-column: span 1; }
+@media(min-width: 640px) { .form-group.full { grid-column: span 2; } }
+label { font-size: 12px; color: var(--text-muted); font-weight: 500; }
+input, select {
+  background-color: var(--bg-core) !important;
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  padding: 12px;
+  color: white !important;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+input:focus, select:focus { border-color: var(--accent); box-shadow: 0 0 8px var(--accent-glow); }
+
+.btn-primary {
+  background-color: var(--accent);
+  color: #000000;
+  border: none;
+  width: 100%;
+  padding: 14px;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 0 12px var(--accent-glow);
+}
+.btn-primary:hover { background-color: var(--accent-hover); box-shadow: 0 0 18px rgba(56, 189, 248, 0.4); }
+
+.result-box {
+  background: linear-gradient(135deg, rgba(14,165,233,0.15), var(--bg-card));
+  border: 1px solid rgba(56,189,248,0.3);
+  border-radius: 16px;
+  padding: 20px;
+  margin-top: 16px;
+  text-align: center;
+}
+.result-title { font-size: 12px; color: var(--accent); font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 1px; }
+.result-big { font-size: 26px; font-weight: 800; color: var(--text-main); margin-bottom: 12px; }
+.result-details {
+  display: flex;
+  justify-content: space-around;
+  background: rgba(0,0,0,0.4);
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border-subtle);
+  margin-top: 12px;
+}
+.result-item-val { font-size: 18px; font-weight: 700; color: var(--success); }
+.result-item-lbl { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+.history-list { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+.history-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg-core);
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border-subtle);
+  font-size: 13px;
+}
+.del-btn { background: none; border: none; color: var(--danger); cursor: pointer; font-size: 14px; padding: 4px; }
+</style>
+</head>
+<body>
+<header>
+  <div class="header-container">
+    <div class="brand-box">
+      <div>
+        <h1 class="brand-title">🥹💴🥹</h1>
+        <p class="brand-subtitle" id="live-clock">SYNCING TIME...</p>
+      </div>
+    </div>
+    <div class="tabs-box">
+      <button onclick="switchTab('calc')" id="tab-calc" class="tab-btn active"><i class="fa-solid fa-calculator"></i>購物換算</button>
+      <button onclick="switchTab('admin')" id="tab-admin" class="tab-btn"><i class="fa-solid fa-sliders"></i>後台設定</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- 1. 購物換算頁面 -->
+  <section id="view-calc">
+    <div class="card">
+      <h2 class="card-title">我想買這個東西！</h2>
+      <p class="card-desc">輸入商品名稱與價格，系統將自動依據你的淨實領薪資與每日工作時數，幫你換算需要工作多久。</p>
+      
+      <div class="form-grid">
+        <div class="form-group full">
+          <label>商品名稱 / 備註</label>
+          <input type="text" id="item-name" placeholder="例如：最新 iPhone、潮牌外套、PS5...">
+        </div>
+        <div class="form-group full">
+          <label>商品價格 ($)</label>
+          <input type="number" id="item-price" placeholder="輸入金額，例如：35000" oninput="calculateTime()">
+        </div>
+      </div>
+      <button onclick="saveAndCalculate()" class="btn-primary">計算並加入購物清單</button>
+
+      <!-- 換算結果呈現 -->
+      <div id="result-container" class="result-box hidden">
+        <div class="result-title" id="res-title-name">--</div>
+        <div class="result-big" id="res-price-display">$0</div>
+        <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 6px;">換算所需工作時間：</div>
+        <div style="font-size: 22px; font-weight: 700; color: var(--accent);" id="res-time-text">0 日 0 小時 0 分鐘</div>
+        
+        <div class="result-details">
+          <div>
+            <div class="result-item-val" id="res-days">0 天</div>
+            <div class="result-item-lbl">工作日</div>
+          </div>
+          <div>
+            <div class="result-item-val" id="res-hours">0 小時</div>
+            <div class="result-item-lbl">小時</div>
+          </div>
+          <div>
+            <div class="result-item-val" id="res-mins">0 分鐘</div>
+            <div class="result-item-lbl">分鐘</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 收藏清單 -->
+    <div class="card">
+      <h3 class="card-title">慾望清單記錄</h3>
+      <p class="card-desc">你曾計算過的商品清單，幫助你冷靜思考。</p>
+      <div id="history-container" class="history-list">
+        <div style="color: var(--text-muted); font-size: 12px; text-align: center; padding: 10px;">目前尚無紀錄</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. 後台設定頁面 -->
+  <section id="view-admin" class="hidden">
+    <div class="card" style="display: flex; flex-direction: column; gap: 16px;">
+      <div>
+        <h2 class="card-title">薪資與工作天數後台參數設定</h2>
+        <p class="card-desc">修改後將直接儲存至本機，並作為所有商品工作時數換算的基準。</p>
+      </div>
+      <div class="form-grid" style="border-top: 1px solid var(--border-subtle); padding-top: 16px;">
+        <div class="form-group">
+          <label>每月底薪 ($)</label>
+          <input type="number" id="cfg-base-salary">
+        </div>
+        <div class="form-group">
+          <label>勞保扣款 ($)</label>
+          <input type="number" id="cfg-labor-ins">
+        </div>
+        <div class="form-group">
+          <label>健保扣款 ($)</label>
+          <input type="number" id="cfg-health-ins">
+        </div>
+        <div class="form-group">
+          <label>每月平均工作天數 (預設22天)</label>
+          <input type="number" id="cfg-work-days" value="22">
+        </div>
+        <div class="form-group full">
+          <label>每日工作時數 (預設8小時)</label>
+          <input type="number" id="cfg-daily-hours" value="8">
+        </div>
+      </div>
+      <div>
+        <button onclick="saveAdminSettings()" class="btn-primary">儲存後台參數並即時生效</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+let defaultSettings = {
+  baseSalary: 37000,
+  laborIns: 1015,
+  healthIns: 458,
+  workDays: 22,
+  dailyHours: 8
+};
+
+let settings = JSON.parse(localStorage.getItem('shopping_calc_settings')) || defaultSettings;
+let historyList = JSON.parse(localStorage.getItem('shopping_calc_history')) || [];
+
+function switchTab(tabId) {
+  ['calc', 'admin'].forEach(t => {
+    document.getElementById(`view-${t}`).classList.add('hidden');
+    document.getElementById(`tab-${t}`).className = "tab-btn";
+  });
+  document.getElementById(`view-${tabId}`).classList.remove('hidden');
+  document.getElementById(`tab-${tabId}`).className = "tab-btn active";
+  if(tabId === 'admin') loadAdminToUI();
+  if(tabId === 'calc') renderHistory();
+}
+
+function updateTaiwanClock() {
+  const now = new Date();
+  const options = { timeZone: 'Asia/Taipei', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+  const formatter = new Intl.DateTimeFormat([], options);
+  document.getElementById('live-clock').textContent = `TW TIME: ${formatter.format(now)}`;
+}
+setInterval(updateTaiwanClock, 1000);
+updateTaiwanClock();
+
+function getNetSalaryInfo() {
+  const netSalary = Number(settings.baseSalary) - Number(settings.laborIns) - Number(settings.healthIns);
+  const totalWorkHours = Number(settings.workDays) * Number(settings.dailyHours);
+  const hourlyRate = netSalary / totalWorkHours;
+  const minuteRate = hourlyRate / 60;
+  return { netSalary, hourlyRate, minuteRate };
+}
+
+function calculateTime() {
+  const price = parseFloat(document.getElementById('item-price').value);
+  const name = document.getElementById('item-name').value || "心儀商品";
+  const resBox = document.getElementById('result-container');
+
+  if (!price || price <= 0) {
+    resBox.classList.add('hidden');
+    return;
+  }
+
+  const { minuteRate } = getNetSalaryInfo();
+  const totalMinutesNeeded = Math.round(price / minuteRate);
+
+  const dailyMins = Number(settings.dailyHours) * 60;
+  const days = Math.floor(totalMinutesNeeded / dailyMins);
+  const remainderMinsAfterDays = totalMinutesNeeded % dailyMins;
+  const hours = Math.floor(remainderMinsAfterDays / 60);
+  const minutes = remainderMinsAfterDays % 60;
+
+  document.getElementById('res-title-name').textContent = name;
+  document.getElementById('res-price-display').textContent = `$${price.toLocaleString()}`;
+  document.getElementById('res-time-text').textContent = `${days} 日 ${hours} 小時 ${minutes} 分鐘`;
+  
+  document.getElementById('res-days').textContent = `${days} 天`;
+  document.getElementById('res-hours').textContent = `${hours} 小時`;
+  document.getElementById('res-mins').textContent = `${minutes} 分鐘`;
+
+  resBox.classList.remove('hidden');
+}
+
+function saveAndCalculate() {
+  const name = document.getElementById('item-name').value.trim();
+  const price = parseFloat(document.getElementById('item-price').value);
+
+  if (!name || !price) {
+    alert('請完整輸入商品名稱與價格！');
+    return;
+  }
+
+  calculateTime();
+
+  const { minuteRate } = getNetSalaryInfo();
+  const totalMinutesNeeded = Math.round(price / minuteRate);
+  const dailyMins = Number(settings.dailyHours) * 60;
+  const days = Math.floor(totalMinutesNeeded / dailyMins);
+  const hours = Math.floor((totalMinutesNeeded % dailyMins) / 60);
+  const minutes = (totalMinutesNeeded % dailyMins) % 60;
+
+  const newItem = {
+    id: Date.now(),
+    name,
+    price,
+    timeText: `${days}日 ${hours}時 ${minutes}分`
+  };
+
+  historyList.unshift(newItem);
+  if(historyList.length > 20) historyList.pop();
+  localStorage.setItem('shopping_calc_history', JSON.stringify(historyList));
+  renderHistory();
+}
+
+function renderHistory() {
+  const container = document.getElementById('history-container');
+  if (historyList.length === 0) {
+    container.innerHTML = `<div style="color: var(--text-muted); font-size: 12px; text-align: center; padding: 10px;">目前尚無紀錄</div>`;
+    return;
+  }
+
+  container.innerHTML = '';
+  historyList.forEach((item) => {
+    const div = document.createElement('div');
+    div.className = 'history-item';
+    div.innerHTML = `
+      <div>
+        <div style="font-weight: 600; color: var(--text-main);">${item.name}</div>
+        <div style="font-size: 11px; color: var(--text-muted); margin-top: 2px;">價格: $${item.price.toLocaleString()} | 需工作: <span style="color: var(--accent); font-weight: 650;">${item.timeText}</span></div>
+      </div>
+      <button onclick="deleteHistory(${item.id})" class="del-btn"><i class="fa-solid fa-trash-can"></i></button>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function deleteHistory(id) {
+  historyList = historyList.filter(item => item.id !== id);
+  localStorage.setItem('shopping_calc_history', JSON.stringify(historyList));
+  renderHistory();
+}
+
+function loadAdminToUI() {
+  document.getElementById('cfg-base-salary').value = settings.baseSalary;
+  document.getElementById('cfg-labor-ins').value = settings.laborIns;
+  document.getElementById('cfg-health-ins').value = settings.healthIns;
+  document.getElementById('cfg-work-days').value = settings.workDays;
+  document.getElementById('cfg-daily-hours').value = settings.dailyHours;
+}
+
+function saveAdminSettings() {
+  settings.baseSalary = Number(document.getElementById('cfg-base-salary').value);
+  settings.laborIns = Number(document.getElementById('cfg-labor-ins').value);
+  settings.healthIns = Number(document.getElementById('cfg-health-ins').value);
+  settings.workDays = Number(document.getElementById('cfg-work-days').value);
+  settings.dailyHours = Number(document.getElementById('cfg-daily-hours').value);
+
+  localStorage.setItem('shopping_calc_settings', JSON.stringify(settings));
+  alert('後台參數已成功更新，換算公式已即時調整！');
+  switchTab('calc');
+}
+
+window.onload = function() {
+  renderHistory();
+};
+</script>
+</body>
+</html>
